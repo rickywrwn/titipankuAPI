@@ -2,8 +2,9 @@
 include("DbConnect.php");
 
 $idPreorder = $_GET["idPreorder"];
+$idPembeli = $_GET["idPembeli"];
 
-  $sql = "SELECT * FROM offerPreorder WHERE idPreorder = '$idPreorder' AND status != '0'";
+  $sql = "SELECT * FROM offerPreorder WHERE idPreorder = '$idPreorder' AND status != '0' AND idPembeli = '$idPembeli'";
   $result = mysqli_query($conn,$sql);
 
   $offers=array();
