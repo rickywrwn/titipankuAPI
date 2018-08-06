@@ -22,7 +22,7 @@ if(isset($_GET["action"]))
       $timestamp = strtotime($tglPulang);
       $back = date("Y-m-d H:i:s", $timestamp);
 
-      $sql1 = "INSERT INTO offerRequest(idRequest,idPenawar,idPemilik,tglOffer,hargaPenawaran,tglPulang,provinsi,kota,idKota,status) VALUES ('$idRequest', '$idPenawar', '$idPemilik', '$today' , '$hargaPenawaran', '$back', '$provinsi', '$kota' ,'$idKota' ,'1')";
+      $sql1 = "INSERT INTO offerRequest(idRequest,idPenawar,idPemilik,tglOffer,hargaPenawaran,tglPulang,provinsi,kota,idKota,hargaOngkir,jenisOngkir,status) VALUES ('$idRequest', '$idPenawar', '$idPemilik', '$today' , '$hargaPenawaran', '$back', '$provinsi', '$kota' ,'$idKota',0,'' ,'1')";
       $result1 = mysqli_query($conn,$sql1);
       if($result1)
       {
