@@ -3,7 +3,7 @@ include("DbConnect.php");
 
 $idRequest = $_GET["idRequest"];
 
-$sql5 = "SELECT * FROM offerRequest WHERE idRequest = '$idRequest' AND status = '5' ";
+$sql5 = "SELECT * FROM offerRequest WHERE idRequest = '$idRequest' AND status = '5' ORDER BY id DESC";
 $result5 = mysqli_query($conn,$sql5);
 
 $offers=array();
@@ -21,7 +21,7 @@ if(mysqli_num_rows($result5) > 0)
   header('Content-type: application/json');
   echo json_encode($offers);
 }else{
-  $sql4 = "SELECT * FROM offerRequest WHERE idRequest = '$idRequest' AND status = '4' ";
+  $sql4 = "SELECT * FROM offerRequest WHERE idRequest = '$idRequest' AND status = '4' ORDER BY id DESC";
   $result4 = mysqli_query($conn,$sql4);
 
   $offers=array();
@@ -39,7 +39,7 @@ if(mysqli_num_rows($result5) > 0)
     header('Content-type: application/json');
     echo json_encode($offers);
   }else{
-    $sql3 = "SELECT * FROM offerRequest WHERE idRequest = '$idRequest' AND status = '3' ";
+    $sql3 = "SELECT * FROM offerRequest WHERE idRequest = '$idRequest' AND status = '3' ORDER BY id DESC";
     $result3 = mysqli_query($conn,$sql3);
 
     $offers=array();
@@ -57,7 +57,7 @@ if(mysqli_num_rows($result5) > 0)
       header('Content-type: application/json');
       echo json_encode($offers);
     }else{
-      $sql1 = "SELECT * FROM offerRequest WHERE idRequest = '$idRequest' AND status = '2' ";
+      $sql1 = "SELECT * FROM offerRequest WHERE idRequest = '$idRequest' AND status = '2' ORDER BY id DESC";
       $result1 = mysqli_query($conn,$sql1);
 
       $offers=array();
@@ -75,7 +75,7 @@ if(mysqli_num_rows($result5) > 0)
         header('Content-type: application/json');
         echo json_encode($offers);
       }else{
-        $sql = "SELECT * FROM offerRequest WHERE idRequest = '$idRequest' AND status = '1'";
+        $sql = "SELECT * FROM offerRequest WHERE idRequest = '$idRequest' AND status = '1' ORDER BY id DESC";
         $result = mysqli_query($conn,$sql);
 
         $offers=array();

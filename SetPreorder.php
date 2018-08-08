@@ -58,13 +58,11 @@ if(isset($_GET["action"]))
       //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
         $idOffer = $_GET['idOffer'];
         $idRequest = $_GET['idRequest'];
-        $idPenawar = $_GET['idPenawar'];
-        $email = $_GET['email'];
-        $sql2 = "UPDATE offerRequest SET status='3' WHERE id='$idOffer'";
+        $sql2 = "UPDATE offerPreorder SET status='3' WHERE id='$idOffer'";
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
         {
-          $sql4 = "UPDATE postRequest SET status='3' WHERE id='$idRequest'";
+          $sql4 = "UPDATE postPreorder SET status='3' WHERE id='$idRequest'";
           $result4 = mysqli_query($conn,$sql4);
           if($result4)
           {
@@ -89,14 +87,12 @@ if(isset($_GET["action"]))
       //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
         $idOffer = $_GET['idOffer'];
         $idRequest = $_GET['idRequest'];
-        $idPenawar = $_GET['idPenawar'];
         $nomorResi = $_GET['nomorResi'];
-        $email = $_GET['email'];
-        $sql2 = "UPDATE offerRequest SET status='4' WHERE id='$idOffer'";
+        $sql2 = "UPDATE offerPreorder SET status='4',nomorResi='$nomorResi' WHERE id='$idOffer'";
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
         {
-          $sql4 = "UPDATE postRequest SET status='4',nomorResi='$nomorResi' WHERE id='$idRequest'";
+          $sql4 = "UPDATE postPreorder SET status='4' WHERE id='$idRequest'";
           $result4 = mysqli_query($conn,$sql4);
           if($result4)
           {
@@ -121,12 +117,11 @@ if(isset($_GET["action"]))
       //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
         $idOffer = $_GET['idOffer'];
         $idRequest = $_GET['idRequest'];
-        $email = $_GET['email'];
-        $sql2 = "UPDATE offerRequest SET status='5' WHERE id='$idOffer'";
+        $sql2 = "UPDATE offerPreorder SET status='5' WHERE id='$idOffer'";
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
         {
-          $sql4 = "UPDATE postRequest SET status='5' WHERE id='$idRequest'";
+          $sql4 = "UPDATE postPreorder SET status='5' WHERE id='$idRequest'";
           $result4 = mysqli_query($conn,$sql4);
           if($result4)
           {

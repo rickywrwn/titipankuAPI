@@ -1,7 +1,7 @@
 <?php
 include("DbConnect.php");
 
-$sql1 = "SELECT * FROM postPreorder where batasWaktu = '1'";
+$sql1 = "SELECT * FROM postPreorder where batasWaktu = '1' AND status != '0' AND status != '5' ORDER BY id DESC";
 $result1 = mysqli_query($conn,$sql1);
 
 $apps=array();

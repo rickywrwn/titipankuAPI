@@ -17,7 +17,7 @@ if($action == "insert"){
     $pengiriman = $_GET["pengiriman"];
     $saldo = $_GET["saldo"];
 
-    $sql1 = "INSERT INTO offerPreorder(idPreorder,idPembeli,tglBeli,qty,kota,idkota,hargaOngkir,pengiriman,resi,status) VALUES ('$idPreorder', '$email', '$today','$qty','$kota','$idKota','$hargaOngkir','$pengiriman','0','1')";
+    $sql1 = "INSERT INTO offerPreorder(idPreorder,idPembeli,tglBeli,qty,kota,idkota,hargaOngkir,pengiriman,nomorResi,jenisOngkir,status) VALUES ('$idPreorder', '$email', '$today','$qty','$kota','$idKota','$hargaOngkir','$pengiriman','0','-','1')";
     $result1 = mysqli_query($conn,$sql1);
     if($result1)
     {

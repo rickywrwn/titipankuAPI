@@ -46,8 +46,19 @@ if(isset($_GET["action"]))
             $result4 = mysqli_query($conn,$sql4);
             if($result4)
             {
-              $response = array('success' => 1,
-                       'message' => 'Terima offer Sukses');
+              $sql1 = "UPDATE offerRequest SET status='0' WHERE status != '2'";
+              $result1 = mysqli_query($conn,$sql1);
+              if($result1)
+              {
+                $response = array('success' => 1,
+                         'message' => 'Terima offer Sukses');
+              }
+              else
+              {
+                  $response = array('success' => 0,
+                           'message' => mysqli_error($conn));
+              }
+
             }else{
                 $response = array('success' => 0,
                          'message' => mysqli_error($conn));

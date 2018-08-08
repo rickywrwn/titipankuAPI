@@ -73,8 +73,29 @@ if($action == "insert"){
         $result1 = mysqli_query($conn,$sql1);
         if($result1)
         {
+          $sql2 = "SELECT * FROM masterNegara WHERE nama='$country'";
+          $result2 = mysqli_query($conn,$sql2);
+
+          if(mysqli_num_rows($result2) > 0)
+          {
             $response = array('success' => 1,
                      'message' => 'Post Barang Sukses');
+          }else{
+
+             $sql3 = "INSERT INTO masterNegara(nama) VALUES ('$country')";
+             $result3 = mysqli_query($conn,$sql3);
+             if($result3)
+             {
+               $response = array('success' => 1,
+                        'message' => 'Post Barang dan negara Sukses');
+             }
+             else
+             {
+                 $response = array('success' => 0,
+                          'message' => mysqli_error($conn));
+             }
+          }
+
         }
         else
         {
