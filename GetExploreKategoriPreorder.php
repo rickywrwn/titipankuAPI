@@ -3,7 +3,7 @@ include("DbConnect.php");
 
 $negara = $_GET["negara"];
 
-$sql = "SELECT * FROM postPreorder WHERE status != '0' AND status != '5' AND category = '$negara' AND batasWaktu='0' ORDER BY id DESC";
+$sql = "SELECT * FROM postPreorder WHERE status != '0' AND status != '5' AND category = '$negara' ORDER BY id DESC";
 $result = mysqli_query($conn,$sql);
 
 $app=array();
