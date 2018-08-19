@@ -2,13 +2,15 @@
 include("DbConnect.php");
 
   //upload gambar di xcode pake post
-if(isset($_GET["action"]))
+
+if(isset($_POST["action"]))
 {
-  $action = $_GET["action"];
+  $action = $_POST["action"];
+  $action2 = $_POST["action2"];
 
     if($action == "decline"){
       //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
-        $idOffer = $_GET['idOffer'];
+        $idOffer = $_POST['idOffer'];
         $sql1 = "UPDATE offerRequest SET status='0' WHERE id='$idOffer'";
         $result1 = mysqli_query($conn,$sql1);
         if($result1)
@@ -27,58 +29,45 @@ if(isset($_GET["action"]))
       echo json_encode($response);
     }else if($action == "accept"){
       //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
-        $idOffer = $_GET['idOffer'];
-        $idRequest = $_GET['idRequest'];
-        $hargaOngkir = $_GET['hargaOngkir'];
-        $jenisOngkir = $_GET['jenisOngkir'];
-        $idPenawar = $_GET['idPenawar'];
-        $saldo = $_GET['saldo'];
-        $email = $_GET['email'];
-        $jumlah = $_GET['jumlah'];
-        $today = date("Y-m-d");
-
-        $sql5 = "INSERT INTO topup(email,jumlah,saldo,status,orderId,tglTopup,jenis,rekening) VALUES ('$email', '$jumlah','$saldo','sukses','$idOffer','$today','Pembayaran Request','')";
-        $result5 = mysqli_query($conn,$sql5);
-        if($result5)
+        $idOffer = $_POST['idOffer'];
+        $idRequest = $_POST['idRequest'];
+        $hargaOngkir = $_POST['hargaOngkir'];
+        $jenisOngkir = $_POST['jenisOngkir'];
+        $idPenawar = $_POST['idPenawar'];
+        $saldo = $_POST['saldo'];
+        $email = $_POST['email'];
+        $sql2 = "UPDATE offerRequest SET status='2', hargaOngkir='$hargaOngkir', jenisOngkir='$jenisOngkir' WHERE id='$idOffer'";
+        $result2 = mysqli_query($conn,$sql2);
+        if($result2)
         {
-          $sql2 = "UPDATE offerRequest SET status='2', hargaOngkir='$hargaOngkir', jenisOngkir='$jenisOngkir' WHERE id='$idOffer'";
-          $result2 = mysqli_query($conn,$sql2);
-          if($result2)
+          $sql3 = "UPDATE user SET saldo='$saldo' WHERE email='$email'";
+          $result3 = mysqli_query($conn,$sql3);
+          if($result3)
           {
-            $sql3 = "UPDATE user SET saldo='$saldo' WHERE email='$email'";
-            $result3 = mysqli_query($conn,$sql3);
-            if($result3)
+            $sql4 = "UPDATE postRequest SET status='2',idPenawar='$idPenawar' WHERE id='$idRequest'";
+            $result4 = mysqli_query($conn,$sql4);
+            if($result4)
             {
-              $sql4 = "UPDATE postRequest SET status='2',idPenawar='$idPenawar' WHERE id='$idRequest'";
-              $result4 = mysqli_query($conn,$sql4);
-              if($result4)
+              $sql1 = "UPDATE offerRequest SET status='0' WHERE status != '2'";
+              $result1 = mysqli_query($conn,$sql1);
+              if($result1)
               {
-                $sql1 = "UPDATE offerRequest SET status='0' WHERE status != '2' AND idRequest='$idRequest'";
-                $result1 = mysqli_query($conn,$sql1);
-                if($result1)
-                {
-                  $response = array('success' => 1,
+                $response = array('success' => 1,
                          'message' => 'Terima offer Sukses');
-                }
-                else
-                {
-                    $response = array('success' => 0,
-                             'message' => mysqli_error($conn));
-                }
-
-              }else{
+              }
+              else
+              {
                   $response = array('success' => 0,
                            'message' => mysqli_error($conn));
               }
-
 
             }else{
                 $response = array('success' => 0,
                          'message' => mysqli_error($conn));
             }
-          }
-          else
-          {
+
+
+          }else{
               $response = array('success' => 0,
                        'message' => mysqli_error($conn));
           }
@@ -89,17 +78,45 @@ if(isset($_GET["action"]))
                      'message' => mysqli_error($conn));
         }
 
-
       // headers to tell that result is JSON
       header('Content-type: application/json');
       echo json_encode($response);
 
     }else if($action == "confirm"){
       //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
-        $idOffer = $_GET['idOffer'];
-        $idRequest = $_GET['idRequest'];
-        $idPenawar = $_GET['idPenawar'];
-        $email = $_GET['email'];
+        $idOffer = $_POST['idOffer'];
+        $idRequest = $_POST['idRequest'];
+        $idPenawar = $_POST['idPenawar'];
+        $email = $_POST['email'];
+        if ($action2 == "upload") {
+
+          //get max id untuk nama gambar yg diupload
+          $target_dir = "/home/titq2258/public_html/uploads/";
+          $target_file = $target_dir . basename($_FILES["userfile"]["name"]);
+          $uploadOk = 1;
+          $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+          // Check if image file is a actual image or fake image
+              $check = getimagesize($_FILES["userfile"]["tmp_name"]);
+              if($check !== false) {
+                  $response =  "File is an image - " . $check["mime"] . ".";
+                  $uploadOk = 1;
+              } else {
+                  $response =  "File is not an image.";
+                  $uploadOk = 0;
+              }
+
+
+          if (move_uploaded_file($_FILES["userfile"]["tmp_name"], $target_dir.'nota' . $idOffer.'.'.$imageFileType  )) {
+                  $response = "The file ". basename( $_FILES["userfile"]["name"]). " has been uploaded.";
+
+              } else {
+                  $response = "Sorry, there was an error uploading your file.";
+              }
+
+              // headers to tell that result is JSON
+              header('Content-type: application/json');
+              echo json_encode($response);
+        }else{
         $sql2 = "UPDATE offerRequest SET status='3' WHERE id='$idOffer'";
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
@@ -120,6 +137,7 @@ if(isset($_GET["action"]))
             $response = array('success' => 0,
                      'message' => mysqli_error($conn));
         }
+      }
 
       // headers to tell that result is JSON
       header('Content-type: application/json');
@@ -127,11 +145,10 @@ if(isset($_GET["action"]))
 
     }else if($action == "kirim"){
       //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
-        $idOffer = $_GET['idOffer'];
-        $idRequest = $_GET['idRequest'];
-        $idPenawar = $_GET['idPenawar'];
-        $nomorResi = $_GET['nomorResi'];
-        $email = $_GET['email'];
+        $idOffer = $_POST['idOffer'];
+        $idRequest = $_POST['idRequest'];
+        $idPenawar = $_POST['idPenawar'];
+        $nomorResi = $_POST['nomorResi'];
         $sql2 = "UPDATE offerRequest SET status='4' WHERE id='$idOffer'";
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
@@ -159,14 +176,9 @@ if(isset($_GET["action"]))
 
     }else if($action == "terima"){
       //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
-        $idOffer = $_GET['idOffer'];
-        $idRequest = $_GET['idRequest'];
-        $email = $_GET['email'];
-        $jumlah = $_GET['jumlah'];
-        $saldo = $_GET['saldo'];
-        $idPenawar = $_GET['idPenawar'];
-        $today = date("Y-m-d");
-
+        $idOffer = $_POST['idOffer'];
+        $idRequest = $_POST['idRequest'];
+        $email = $_POST['email'];
         $sql2 = "UPDATE offerRequest SET status='5' WHERE id='$idOffer'";
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
@@ -175,28 +187,8 @@ if(isset($_GET["action"]))
           $result4 = mysqli_query($conn,$sql4);
           if($result4)
           {
-              $sql5 = "INSERT INTO topup(email,jumlah,saldo,status,orderId,tglTopup,jenis,rekening) VALUES ('$idPenawar', '$jumlah','$saldo','sukses','$idOffer','$today','Penerimaan Request','')";
-              $result5 = mysqli_query($conn,$sql5);
-              if($result5)
-              {
-                $sql6 = "UPDATE user SET saldo='$saldo' WHERE email='$idPenawar'";
-                $result6 = mysqli_query($conn,$sql6);
-                if($result6){
-
-                  $response = array('success' => 1,
-                           'message' => 'Penerimaan Barang Sukses');
-                }else
-                {
-                    $response = array('success' => 0,
-                             'message' => mysqli_error($conn));
-                }
-
-              }
-              else
-              {
-                  $response = array('success' => 0,
-                           'message' => mysqli_error($conn));
-              }
+            $response = array('success' => 1,
+                     'message' => 'Penerimaan Barang Sukses');
           }else{
               $response = array('success' => 0,
                        'message' => mysqli_error($conn));
@@ -215,7 +207,7 @@ if(isset($_GET["action"]))
     }
     else if($action == "cancel"){
       //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
-        $idOffer = $_GET['idOffer'];
+        $idOffer = $_POST['idOffer'];
         $sql1 = "UPDATE offerRequest SET status='0' WHERE id='$idOffer'";
         $result1 = mysqli_query($conn,$sql1);
         if($result1)

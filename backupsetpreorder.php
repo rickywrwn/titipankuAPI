@@ -33,8 +33,16 @@ if(isset($_GET["action"]))
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
         {
-          $response = array('success' => 1,
-                   'message' => 'Terima Pembelian Sukses');
+          $sql4 = "UPDATE postPreorder SET status='2'WHERE id='$idRequest'";
+          $result4 = mysqli_query($conn,$sql4);
+          if($result4)
+          {
+            $response = array('success' => 1,
+                     'message' => 'Terima Pembelian Sukses');
+          }else{
+              $response = array('success' => 3,
+                       'message' => mysqli_error($conn));
+          }
         }
         else
         {
@@ -47,46 +55,23 @@ if(isset($_GET["action"]))
       echo json_encode($response);
 
     }else if($action == "confirm"){
-
+      //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
         $idOffer = $_GET['idOffer'];
         $idRequest = $_GET['idRequest'];
-      if ($action2 == "upload") {
-
-        //get max id untuk nama gambar yg diupload
-        $target_dir = "/home/titq2258/public_html/uploads/";
-        $target_file = $target_dir . basename($_FILES["userfile"]["name"]);
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-        // Check if image file is a actual image or fake image
-            $check = getimagesize($_FILES["userfile"]["tmp_name"]);
-            if($check !== false) {
-                $response =  "File is an image - " . $check["mime"] . ".";
-                $uploadOk = 1;
-            } else {
-                $response =  "File is not an image.";
-                $uploadOk = 0;
-            }
-
-
-        if (move_uploaded_file($_FILES["userfile"]["tmp_name"], $target_dir.'nota' . $idOffer.'.'.$imageFileType  )) {
-                $response = "The file ". basename( $_FILES["userfile"]["name"]). " has been uploaded.";
-
-            } else {
-                $response = "Sorry, there was an error uploading your file.";
-            }
-
-            // headers to tell that result is JSON
-            header('Content-type: application/json');
-            echo json_encode($response);
-      }else{
-      //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
         $sql2 = "UPDATE offerPreorder SET status='3' WHERE id='$idOffer'";
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
         {
-          $response = array('success' => 1,
-                   'message' => 'Barang Dibelikan Sukses');
-
+          $sql4 = "UPDATE postPreorder SET status='3' WHERE id='$idRequest'";
+          $result4 = mysqli_query($conn,$sql4);
+          if($result4)
+          {
+            $response = array('success' => 1,
+                     'message' => 'Barang Dibelikan Sukses');
+          }else{
+              $response = array('success' => 0,
+                       'message' => mysqli_error($conn));
+          }
         }
         else
         {
@@ -97,7 +82,7 @@ if(isset($_GET["action"]))
       // headers to tell that result is JSON
       header('Content-type: application/json');
       echo json_encode($response);
-    }
+
     }else if($action == "kirim"){
       //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
         $idOffer = $_GET['idOffer'];
@@ -107,8 +92,16 @@ if(isset($_GET["action"]))
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
         {
-          $response = array('success' => 1,
-                   'message' => 'Pengiriman Barang Sukses');
+          $sql4 = "UPDATE postPreorder SET status='4' WHERE id='$idRequest'";
+          $result4 = mysqli_query($conn,$sql4);
+          if($result4)
+          {
+            $response = array('success' => 1,
+                     'message' => 'Pengiriman Barang Sukses');
+          }else{
+              $response = array('success' => 0,
+                       'message' => mysqli_error($conn));
+          }
         }
         else
         {
@@ -128,8 +121,16 @@ if(isset($_GET["action"]))
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
         {
-          $response = array('success' => 1,
-                   'message' => 'Penerimaan Barang Sukses');
+          $sql4 = "UPDATE postPreorder SET status='5' WHERE id='$idRequest'";
+          $result4 = mysqli_query($conn,$sql4);
+          if($result4)
+          {
+            $response = array('success' => 1,
+                     'message' => 'Penerimaan Barang Sukses');
+          }else{
+              $response = array('success' => 0,
+                       'message' => mysqli_error($conn));
+          }
         }
         else
         {
