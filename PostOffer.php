@@ -13,6 +13,7 @@ if(isset($_GET["action"]))
       $idRequest = $_GET['idRequest'];
       $idPenawar = $_GET['idPenawar'];
       $idPemilik = $_GET['idPemilik'];
+      $email = $_GET['email'];
       $hargaPenawaran = $_GET['hargaPenawaran'];
       $tglPulang = $_GET['tglPulang'];
       $provinsi = $_GET['provinsi'];
@@ -26,8 +27,20 @@ if(isset($_GET["action"]))
       $result1 = mysqli_query($conn,$sql1);
       if($result1)
       {
+        $sql2 = "INSERT INTO notification(name,tanggal,jenis,idTujuan,email) VALUES ('Anda Mendapat Penawaran Baru', '$today','request','$idRequest','$email')";
+        $result2 = mysqli_query($conn,$sql2);
+        if($result2)
+        {
           $response = array('success' => 1,
                    'message' => 'Post offer Sukses');
+        }
+        else
+        {
+            $response = array('success' => 0,
+                     'message' => mysqli_error($conn));
+        }
+
+
       }
       else
       {

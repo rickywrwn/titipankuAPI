@@ -9,12 +9,25 @@ if(isset($_GET["action"]))
     if($action == "decline"){
       //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
         $idOffer = $_GET['idOffer'];
+        $idRequest = $_GET['idRequest'];
+        $idPenawar = $_GET['idPenawar'];
+        $today = date("Y-m-d");
         $sql1 = "UPDATE offerRequest SET status='0' WHERE id='$idOffer'";
         $result1 = mysqli_query($conn,$sql1);
         if($result1)
         {
-            $response = array('success' => 1,
-                     'message' => 'Tolak offer Sukses');
+          $sql2 = "INSERT INTO notification(name,tanggal,jenis,idTujuan,email) VALUES ('Penawaran Anda Ditolak', '$today','request','$idRequest','$idPenawar')";
+          $result2 = mysqli_query($conn,$sql2);
+          if($result2)
+          {
+              $response = array('success' => 1,
+                       'message' => 'Tolak offer Sukses');
+          }
+          else
+          {
+              $response = array('success' => 0,
+                       'message' => mysqli_error($conn));
+          }
         }
         else
         {
@@ -57,8 +70,18 @@ if(isset($_GET["action"]))
                 $result1 = mysqli_query($conn,$sql1);
                 if($result1)
                 {
-                  $response = array('success' => 1,
-                         'message' => 'Terima offer Sukses');
+                  $sql2 = "INSERT INTO notification(name,tanggal,jenis,idTujuan,email) VALUES ('Penawaran Anda Diterima', '$today','request','$idRequest','$idPenawar')";
+                  $result2 = mysqli_query($conn,$sql2);
+                  if($result2)
+                  {
+                    $response = array('success' => 1,
+                           'message' => 'Terima offer Sukses');
+                  }
+                  else
+                  {
+                      $response = array('success' => 0,
+                               'message' => mysqli_error($conn));
+                  }
                 }
                 else
                 {
@@ -100,6 +123,7 @@ if(isset($_GET["action"]))
         $idRequest = $_GET['idRequest'];
         $idPenawar = $_GET['idPenawar'];
         $email = $_GET['email'];
+        $today = date("Y-m-d");
         $sql2 = "UPDATE offerRequest SET status='3' WHERE id='$idOffer'";
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
@@ -108,8 +132,18 @@ if(isset($_GET["action"]))
           $result4 = mysqli_query($conn,$sql4);
           if($result4)
           {
-            $response = array('success' => 1,
-                     'message' => 'Barang Dibelikan Sukses');
+            $sql2 = "INSERT INTO notification(name,tanggal,jenis,idTujuan,email) VALUES ('Request Anda Sudah Dibelikan', '$today','request','$idRequest','$email')";
+            $result2 = mysqli_query($conn,$sql2);
+            if($result2)
+            {
+              $response = array('success' => 1,
+                       'message' => 'Barang Dibelikan Sukses');
+            }
+            else
+            {
+                $response = array('success' => 0,
+                         'message' => mysqli_error($conn));
+            }
           }else{
               $response = array('success' => 0,
                        'message' => mysqli_error($conn));
@@ -132,6 +166,7 @@ if(isset($_GET["action"]))
         $idPenawar = $_GET['idPenawar'];
         $nomorResi = $_GET['nomorResi'];
         $email = $_GET['email'];
+        $today = date("Y-m-d");
         $sql2 = "UPDATE offerRequest SET status='4' WHERE id='$idOffer'";
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
@@ -140,8 +175,18 @@ if(isset($_GET["action"]))
           $result4 = mysqli_query($conn,$sql4);
           if($result4)
           {
-            $response = array('success' => 1,
+            $sql2 = "INSERT INTO notification(name,tanggal,jenis,idTujuan,email) VALUES ('Request Anda Sudah Dikirim', '$today','request','$idRequest','$email')";
+            $result2 = mysqli_query($conn,$sql2);
+            if($result2)
+            {
+              $response = array('success' => 1,
                      'message' => 'Pengiriman Barang Sukses');
+            }
+            else
+            {
+                $response = array('success' => 0,
+                         'message' => mysqli_error($conn));
+            }
           }else{
               $response = array('success' => 0,
                        'message' => mysqli_error($conn));
@@ -182,9 +227,20 @@ if(isset($_GET["action"]))
                 $sql6 = "UPDATE user SET saldo='$saldo' WHERE email='$idPenawar'";
                 $result6 = mysqli_query($conn,$sql6);
                 if($result6){
+                  $sql2 = "INSERT INTO notification(name,tanggal,jenis,idTujuan,email) VALUES ('Request Sudah Diterima oleh Requester', '$today','request','$idRequest','$idPenawar')";
+                  $result2 = mysqli_query($conn,$sql2);
+                  if($result2)
+                  {
+                    $response = array('success' => 1,
+                             'message' => 'Penerimaan Barang Sukses');
+                  }
+                  else
+                  {
+                      $response = array('success' => 0,
+                               'message' => mysqli_error($conn));
+                  }
 
-                  $response = array('success' => 1,
-                           'message' => 'Penerimaan Barang Sukses');
+
                 }else
                 {
                     $response = array('success' => 0,

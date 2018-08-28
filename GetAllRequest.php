@@ -1,7 +1,7 @@
 <?php
 include("DbConnect.php");
 
-$sql = "SELECT * FROM postRequest WHERE status != '0' AND status != '5' ORDER BY id DESC";
+$sql = "SELECT * FROM postRequest WHERE status != '0' ORDER BY id DESC";
 $result = mysqli_query($conn,$sql);
 
 $app=array();
