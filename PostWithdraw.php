@@ -11,10 +11,11 @@ if($action == "insert"){
     $jumlah = $_GET["jumlah"];
     $saldo = $_GET["saldo"];
     $status = $_GET["status"];
-    $orderId = $_GET["orderId"];
+    $rekening = $_GET["rekening"];
+    $namaRekening = $_GET["namaRekening"];
     $today = date("Y-m-d");
 
-    $sql1 = "INSERT INTO topup(email,jumlah,saldo,status,orderId,tglTopup,jenis,rekening) VALUES ('$email', '$jumlah','$saldo','$status','$orderId','$today','Topup','')";
+    $sql1 = "INSERT INTO topup(email,jumlah,saldo,status,orderId,tglTopup,jenis,rekening,namaRekening) VALUES ('$email', '$jumlah','$saldo','$status','','$today','Withdraw','$rekening','$namaRekening')";
     $result1 = mysqli_query($conn,$sql1);
     if($result1)
     {

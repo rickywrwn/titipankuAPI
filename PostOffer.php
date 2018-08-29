@@ -10,6 +10,7 @@ if(isset($_GET["action"]))
   if($action == "insert"){
 
     //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
+      $idTrip = $_GET['idTrip'];
       $idRequest = $_GET['idRequest'];
       $idPenawar = $_GET['idPenawar'];
       $idPemilik = $_GET['idPemilik'];
@@ -31,16 +32,24 @@ if(isset($_GET["action"]))
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
         {
-          $response = array('success' => 1,
-                   'message' => 'Post offer Sukses');
+          $sql2 = "INSERT INTO tripRequest(idTrip,idRequest,email,tanggal) VALUES ('$idTrip','$idRequest','$idPenawar','$today')";
+          $result2 = mysqli_query($conn,$sql2);
+          if($result2)
+          {
+            $response = array('success' => 1,
+                     'message' => 'Post offer Sukses');
+          }
+          else
+          {
+              $response = array('success' => 0,
+                       'message' => mysqli_error($conn));
+          }
         }
         else
         {
             $response = array('success' => 0,
                      'message' => mysqli_error($conn));
         }
-
-
       }
       else
       {

@@ -12,7 +12,7 @@ if($action == "insert"){
     $country = $_GET["country"];
     $tgl = $_GET["tgl"];
 
-    $sql1 = "INSERT INTO postTrip(email,country,tanggalPulang) VALUES ('$email', '$country', '$tgl')";
+    $sql1 = "INSERT INTO postTrip(email,country,tanggalPulang,status) VALUES ('$email', '$country', '$tgl','1')";
     $result1 = mysqli_query($conn,$sql1);
     if($result1)
     {

@@ -12,7 +12,7 @@ if(mysqli_num_rows($result) > 0)
   while($row = $result->fetch_assoc()) {
 
       $newDate = date("d F Y", strtotime($row["tanggalPulang"]));
-          $trip=array("country"=>$row["country"],"tanggalPulang"=>$newDate);
+          $trip=array("id"=>$row["id"],"country"=>$row["country"],"tanggalPulang"=>$newDate,"status"=>$row["status"]);
           array_push($trips,$trip);
       }
 }
