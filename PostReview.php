@@ -11,8 +11,9 @@ if($action == "insert"){
   $email = $_GET['email'];
   $rating = $_GET['rating'];
   $review = $_GET['review'];
+  $reviewer = $_GET['reviewer'];
 
-    $sql1 = "INSERT INTO reviewUser(rating,review,email) VALUES ('$rating', '$review', '$email')";
+    $sql1 = "INSERT INTO reviewUser(rating,review,email,reviewer) VALUES ('$rating', '$review', '$email','$reviewer')";
     $result1 = mysqli_query($conn,$sql1);
     if($result1)
     {
@@ -22,7 +23,7 @@ if($action == "insert"){
     else
     {
         $response = array('success' => 0,
-                 'message' => 'Post Review Gagal');
+                 'message' => mysqli_error($conn));
     }
   }
 

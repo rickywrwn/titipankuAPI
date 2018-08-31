@@ -3,7 +3,7 @@ include("DbConnect.php");
 
 $email = $_GET["email"];
 
-$sql = "SELECT * FROM postTrip WHERE email = '$email' ORDER BY id DESC";
+$sql = "SELECT * FROM postTrip WHERE email = '$email' AND status != '0' ORDER BY id DESC ";
 $result = mysqli_query($conn,$sql);
 
 $trips=array();

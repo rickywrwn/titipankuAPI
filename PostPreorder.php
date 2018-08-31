@@ -3,6 +3,7 @@ include("DbConnect.php");
 
 if(isset($_POST["action"]))
 {
+  date_default_timezone_set("Asia/Jakarta");
 
   $action = $_POST["action"];
   $action2 = $_POST["action2"];
@@ -71,8 +72,9 @@ if(isset($_POST["action"]))
         $cdValue = $_POST['countdownValue'];
         $brand = $_POST['brand'];
         $today = date("Y-m-d");
+        $time = date("Y-m-d h:i:s a", time() + $cdValue);
 
-        $sql1 = "INSERT INTO postPreorder(email,name,description,category,country,kotaKirim,price,imageName,url,qty,berat,deadline,idKota,provinsi,batasWaktu,cdText,cdValue,brand,tglPost,status) VALUES ('$email', '$name', '$desc', '$category', '$country', '$kota', '$price', '$imgMax', '$url', '$qty', '$berat', '$deadline', '$idKota', '$provinsi', '$batasWaktu', '$cdText', '$cdValue','$brand', '$today', '1')";
+        $sql1 = "INSERT INTO postPreorder(email,name,description,category,country,kotaKirim,price,imageName,url,qty,berat,deadline,idKota,provinsi,batasWaktu,cdText,cdValue,brand,tglPost,status) VALUES ('$email', '$name', '$desc', '$category', '$country', '$kota', '$price', '$imgMax', '$url', '$qty', '$berat', '$deadline', '$idKota', '$provinsi', '$batasWaktu', '$cdText', '$time','$brand', '$today', '1')";
         $result1 = mysqli_query($conn,$sql1);
         if($result1)
         {

@@ -1,5 +1,6 @@
 <?php
 include("DbConnect.php");
+date_default_timezone_set("Asia/Jakarta");
 
 $bannerApps = array();
 $imageName = array("ImageName"=>"");
@@ -11,6 +12,7 @@ array_push($bannerApps,$imageName);
 $imageName = array("ImageName"=>"");
 array_push($bannerApps,$imageName);
 
+date_default_timezone_set("Asia/Jakarta");
 $banner = array("name"=>"","apps"=>$bannerApps,"type"=>"");
 
 $sql = "SELECT * FROM postRequest WHERE status != '0' ORDER BY id DESC";
@@ -55,7 +57,12 @@ if(mysqli_num_rows($result1) > 0)
           $newDate = date("d F Y", strtotime($row["deadline"]));
           $newDate1 = date("d F Y", strtotime($row["tglPost"]));
           $newPrice = number_format($row["price"]);
-          $trip=array("id"=>$row["id"],"email"=>$row["email"],"name"=>$row["name"],"description"=>$row["description"],"category"=>$row["category"],"country"=>$row["country"],"price"=>$newPrice,"ImageName"=>$row["imageName"],"url"=>$row["url"],"qty"=>$row["qty"],"berat"=>$row["berat"],"kotaKirim"=>$row["kotaKirim"],"idKota"=>$row["idKota"],"provinsi"=>$row["provinsi"],"tglPost"=>$newDate1,"status"=>$row["status"],"deadline"=>$newDate,"batasWaktu"=>$row["batasWaktu"],"cdText"=>$row["cdText"],"cdValue"=>$row["cdValue"],"brand"=>$row["brand"]);
+
+          $date = new DateTime($row["cdValue"]);
+          $date2 =  new DateTime();
+          $diffSeconds = $date->getTimestamp() - $date2->getTimestamp();
+
+          $trip=array("id"=>$row["id"],"email"=>$row["email"],"name"=>$row["name"],"description"=>$row["description"],"category"=>$row["category"],"country"=>$row["country"],"price"=>$newPrice,"ImageName"=>$row["imageName"],"url"=>$row["url"],"qty"=>$row["qty"],"berat"=>$row["berat"],"kotaKirim"=>$row["kotaKirim"],"idKota"=>$row["idKota"],"provinsi"=>$row["provinsi"],"tglPost"=>$newDate1,"status"=>$row["status"],"deadline"=>$newDate,"batasWaktu"=>$row["batasWaktu"],"cdText"=>$row["cdText"],"cdValue"=>$diffSeconds,"brand"=>$row["brand"]);
           array_push($flashSale,$trip);
       }
 }
