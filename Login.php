@@ -63,7 +63,7 @@ if(isset($_GET["action"]))
     if(mysqli_num_rows($result) > 0)
     {
       //Berarti Username Ada
-      $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
+      $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password' AND status = '1' ";
       $result = mysqli_query($conn,$sql);
       if(mysqli_num_rows($result) > 0)
       {
@@ -71,7 +71,7 @@ if(isset($_GET["action"]))
                  'message' => 'Login Berhasil');
       }else{
         $response = array('success' => 0,
-                 'message' => 'Salah Password');
+                 'message' => 'Salah Password atau ID anda Diblokir');
       }
     }else{
       $response = array('success' => 2,

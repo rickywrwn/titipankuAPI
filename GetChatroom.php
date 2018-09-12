@@ -11,7 +11,7 @@ if(mysqli_num_rows($result) > 0)
 {
   while($row = $result->fetch_assoc()) {
 
-          $request=array("id"=>$row["id"],"emailA"=>$row["emailA"],"emailB"=>$row["emailB"],"tanggal"=>$row["tanggal"]);
+          $request=array("id"=>$row["id"],"emailA"=>$row["emailA"],"emailB"=>$row["emailB"],"tanggal"=>$row["tanggal"],"jenis"=>$row["jenis"],"tujuan"=>$row["tujuan"],"idTujuan"=>$row["idTujuan"]);
           array_push($app,$request);
       }
 }
