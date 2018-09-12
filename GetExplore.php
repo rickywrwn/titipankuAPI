@@ -14,7 +14,7 @@ if(mysqli_num_rows($result2) > 0)
       }
 }
 
-$sql3 = "SELECT * FROM masterKategori";
+$sql3 = "SELECT * FROM masterKategori where status != '0' ";
 $result3 = mysqli_query($conn,$sql3);
 
 $kategori=array();

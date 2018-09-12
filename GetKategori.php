@@ -1,7 +1,7 @@
 <?php
 include("DbConnect.php");
 
-$sql2 = "SELECT * FROM masterKategori";
+$sql2 = "SELECT * FROM masterKategori WHERE status != '0'";
 $result2 = mysqli_query($conn,$sql2);
 
 $apps=array();

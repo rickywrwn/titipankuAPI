@@ -21,12 +21,22 @@
    </script>
 </head>
 <?php
+include("DbConnect.php");
+
+$idTujuan = $_GET["idTujuan"];
+$pesan = $_GET["pesan"];
+
+$query = "SELECT device FROM user where email = '$idTujuan'";
+$hasil =  mysqli_query($conn, $query);
+$row = mysqli_fetch_assoc($hasil);
+$device=$row['device'];
+
 $url = "https://fcm.googleapis.com/fcm/send";
 $array = array(
-  "to" => "eQppTe_FN6g:APA91bFAg6oHTMqNQVxQktX3W6hyvANiULmIR0mPBxTSRQAN61ACrgoN_KqT21ywKodfEPCwDF8niTI1F8DWiu9h633KIqkVZp7A6zJcVTo_NJHgj29SciAtZOCTg4OtD375nfH9Ouzy",
+  "to" => $device,
   "notification" => array(
                         "title" => "Titipanku",
-                        "body" => "Penawaran Anda Diterima"
+                        "body" => $pesan
                       )
 );
 $content = json_encode($array);
@@ -51,5 +61,8 @@ if ( $status != 201 ) {
 curl_close($curl);
 
 $response = json_decode($json_response, true);
+
+header('Content-type: application/json');
+echo json_encode($json_response);
 ?>
 </html>
