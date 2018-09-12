@@ -9,6 +9,7 @@ if($action == "insert"){
 
     $email = $_GET['email'];
     $idPreorder = $_GET["idPreorder"];
+    $idPemilik = $_GET["idPemilik"];
     $qty = $_GET["qty"];
     $qtyNow = $_GET["qtyNow"];
     $kota = $_GET["kota"];
@@ -35,8 +36,19 @@ if($action == "insert"){
           $result4 = mysqli_query($conn,$sql4);
           if($result4)
           {
-            $response = array('success' => 1,
-                     'message' => 'Beli Preorder Sukses');
+            $sql2 = "INSERT INTO notification(name,tanggal,jenis,idTujuan,email) VALUES ('Terdapat Penawaran Baru', '$today','preorder','$idPreorder','$idPemilik')";
+            $result2 = mysqli_query($conn,$sql2);
+            if($result2)
+            {
+
+              $response = array('success' => 1,
+                       'message' => 'Beli Preorder Sukses');
+            }
+            else
+            {
+                $response = array('success' => 0,
+                         'message' => mysqli_error($conn));
+            }
 
           }else{
               $response = array('success' => 0,

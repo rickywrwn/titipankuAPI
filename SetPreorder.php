@@ -5,16 +5,29 @@ include("DbConnect.php");
 if(isset($_GET["action"]))
 {
   $action = $_GET["action"];
+  $today = date("Y-m-d");
 
     if($action == "decline"){
       //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
         $idOffer = $_GET['idOffer'];
+        $idPreorder = $_GET['idPreorder'];
+        $idPembeli = $_GET['idPembeli'];
         $sql1 = "UPDATE offerPreorder SET status='0' WHERE id='$idOffer'";
         $result1 = mysqli_query($conn,$sql1);
         if($result1)
         {
-            $response = array('success' => 1,
-                     'message' => 'Tolak offer Sukses');
+          $sql2 = "INSERT INTO notification(name,tanggal,jenis,idTujuan,email) VALUES ('Pembelian Anda Ditolak', '$today','preorder','$idPreorder','$idPembeli')";
+          $result2 = mysqli_query($conn,$sql2);
+          if($result2)
+          {
+              $response = array('success' => 1,
+                       'message' => 'Tolak offer Sukses');
+          }
+          else
+          {
+              $response = array('success' => 0,
+                       'message' => mysqli_error($conn));
+          }
         }
         else
         {
@@ -28,13 +41,25 @@ if(isset($_GET["action"]))
     }else if($action == "accept"){
       //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
         $idOffer = $_GET['idOffer'];
-        $idRequest = $_GET['idRequest'];
+        $idPreorder = $_GET['idPreorder'];
+        $idPembeli = $_GET['idPembeli'];
         $sql2 = "UPDATE offerPreorder SET status='2' WHERE id='$idOffer'";
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
         {
-          $response = array('success' => 1,
-                   'message' => 'Terima Pembelian Sukses');
+          $sql2 = "INSERT INTO notification(name,tanggal,jenis,idTujuan,email) VALUES ('Pembelian Anda Diterima', '$today','preorder','$idPreorder','$idPembeli')";
+          $result2 = mysqli_query($conn,$sql2);
+          if($result2)
+          {
+
+            $response = array('success' => 1,
+                     'message' => 'Terima Pembelian Sukses');
+          }
+          else
+          {
+              $response = array('success' => 0,
+                       'message' => mysqli_error($conn));
+          }
         }
         else
         {
@@ -79,13 +104,24 @@ if(isset($_GET["action"]))
             header('Content-type: application/json');
             echo json_encode($response);
       }else{
+        $idPembeli = $_GET['idPembeli'];
       //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
         $sql2 = "UPDATE offerPreorder SET status='3' WHERE id='$idOffer'";
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
         {
-          $response = array('success' => 1,
-                   'message' => 'Barang Dibelikan Sukses');
+          $sql2 = "INSERT INTO notification(name,tanggal,jenis,idTujuan,email) VALUES ('Barang Anda Sudah Dibelikan', '$today','preorder','$idRequest','$idPembeli')";
+          $result2 = mysqli_query($conn,$sql2);
+          if($result2)
+          {
+            $response = array('success' => 1,
+                     'message' => 'Barang Dibelikan Sukses');
+          }
+          else
+          {
+              $response = array('success' => 0,
+                       'message' => mysqli_error($conn));
+          }
 
         }
         else
@@ -103,12 +139,23 @@ if(isset($_GET["action"]))
         $idOffer = $_GET['idOffer'];
         $idRequest = $_GET['idRequest'];
         $nomorResi = $_GET['nomorResi'];
+        $idPembeli = $_GET['idPembeli'];
         $sql2 = "UPDATE offerPreorder SET status='4',nomorResi='$nomorResi' WHERE id='$idOffer'";
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
         {
-          $response = array('success' => 1,
-                   'message' => 'Pengiriman Barang Sukses');
+          $sql2 = "INSERT INTO notification(name,tanggal,jenis,idTujuan,email) VALUES ('Barang Anda Sudah Dikirim', '$today','preorder','$idRequest','$idPembeli')";
+          $result2 = mysqli_query($conn,$sql2);
+          if($result2)
+          {
+            $response = array('success' => 1,
+                     'message' => 'Pengiriman Barang Sukses');
+          }
+          else
+          {
+              $response = array('success' => 0,
+                       'message' => mysqli_error($conn));
+          }
         }
         else
         {
@@ -124,12 +171,24 @@ if(isset($_GET["action"]))
       //get harus diisi semua kalau tidak alamofire tidak mau ambil respon
         $idOffer = $_GET['idOffer'];
         $idRequest = $_GET['idRequest'];
+        $idPemilik = $_GET['idPemilik'];
         $sql2 = "UPDATE offerPreorder SET status='5' WHERE id='$idOffer'";
         $result2 = mysqli_query($conn,$sql2);
         if($result2)
         {
-          $response = array('success' => 1,
-                   'message' => 'Penerimaan Barang Sukses');
+          $sql2 = "INSERT INTO notification(name,tanggal,jenis,idTujuan,email) VALUES ('Barang Sudah Diterima', '$today','preorder','$idRequest','$idPemilik')";
+          $result2 = mysqli_query($conn,$sql2);
+          if($result2)
+          {
+
+            $response = array('success' => 1,
+                     'message' => 'Penerimaan Barang Sukses');
+          }
+          else
+          {
+              $response = array('success' => 0,
+                       'message' => mysqli_error($conn));
+          }
         }
         else
         {
