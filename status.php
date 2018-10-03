@@ -4,13 +4,6 @@ include("DbConnect.php");
 $server_key = 'U0ItTWlkLXNlcnZlci1Ld1p5c3lOTF80d0hGSURJOGtwNG9VWDA6';
 // Set true for production, set false for sandbox
 
-$max = "SELECT MAX(id) AS max_id FROM offerPreorder";
-$max1 =  mysqli_query($conn, $max);
-$row = mysqli_fetch_assoc($max1);
-$max_id='p'+$row['max_id']; //max tidak perlu ditambah 1 karena sdh terinsert duluan
-
-//echo $max_id;
-
 $idCek = $_GET["id"];
 $api_url ='https://api.sandbox.midtrans.com/v2/'.$idCek.'/status';
 

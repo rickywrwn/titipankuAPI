@@ -6,7 +6,7 @@ if(isset($_GET["action"]))
   $action = $_GET["action"];
   $email = $_GET['email'];
 
-  if($action == "google" || $action == "facebook")
+  if($action == "" || $action == "")
   {
     $sql1 = "INSERT INTO user(email,password,name) VALUES ('$email','a','b')";
     $result1 = mysqli_query($conn,$sql1);
@@ -21,6 +21,61 @@ if(isset($_GET["action"]))
         $response = array('success' => 0,
                    'message' => 'Login Gagal');
       }
+
+  }else if($action == "facebook" ){
+    //$password = md5($_GET["password"]);
+
+
+    $sql = "SELECT * FROM user WHERE email = '$email'";
+    $result = mysqli_query($conn,$sql);
+    if(mysqli_num_rows($result) > 0)
+    {
+      $response = array('success' => 1,
+               'message' => 'Login dengan facebook Berhasil');
+    }else{
+
+      $today = date("Y-m-d");
+      $sql1 = "INSERT INTO user(email,password,name,bio,tanggalDaftar) VALUES ('$email', 'pass', '$name', '', '$today')";
+      $result1 = mysqli_query($conn,$sql1);
+      if($result1)
+      {
+          $response = array('success' => 1,
+                   'message' => 'Register Sukses');
+      }
+      else
+      {
+          $response = array('success' => 0,
+                   'message' =>mysqli_error($conn));
+      }
+    }
+
+  }
+  else if($action == "google" ){
+    //$password = md5($_GET["password"]);
+
+
+    $sql = "SELECT * FROM user WHERE email = '$email'";
+    $result = mysqli_query($conn,$sql);
+    if(mysqli_num_rows($result) > 0)
+    {
+      $response = array('success' => 1,
+               'message' => 'Login dengan google Berhasil');
+    }else{
+
+      $today = date("Y-m-d");
+      $sql1 = "INSERT INTO user(email,password,name,bio,tanggalDaftar) VALUES ('$email', 'pass', '$name', '', '$today')";
+      $result1 = mysqli_query($conn,$sql1);
+      if($result1)
+      {
+          $response = array('success' => 1,
+                   'message' => 'Register Sukses');
+      }
+      else
+      {
+          $response = array('success' => 0,
+                   'message' =>mysqli_error($conn));
+      }
+    }
 
   }else if($action == "register"){
 

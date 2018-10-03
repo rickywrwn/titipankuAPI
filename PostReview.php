@@ -6,8 +6,6 @@ if(isset($_GET["action"]))
   $action = $_GET["action"];
 
 if($action == "insert"){
-
-
   $email = $_GET['email'];
   $rating = $_GET['rating'];
   $review = $_GET['review'];
@@ -25,7 +23,7 @@ if($action == "insert"){
         $response = array('success' => 0,
                  'message' => mysqli_error($conn));
     }
-  }
+
 
 
   // headers to tell that result is JSON

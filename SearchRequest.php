@@ -25,6 +25,7 @@ if ($filter == "none"){
   // headers to tell that result is JSON
   header('Content-type: application/json');
   echo json_encode($app);
+  
 }else if ($filter == "kategori"){
   $sql = "SELECT * FROM postRequest WHERE status != '0' AND name LIKE '%$search%' AND category='$kategori'ORDER BY id DESC";
   $result = mysqli_query($conn,$sql);

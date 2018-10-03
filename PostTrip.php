@@ -24,7 +24,7 @@ if($action == "insert"){
         $response = array('success' => 0,
                  'message' => 'Post Trip Gagal');
     }
-  }
+  
 
 
   // headers to tell that result is JSON
