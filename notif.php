@@ -45,7 +45,8 @@ $curl = curl_init($url);
 curl_setopt($curl, CURLOPT_HEADER, false);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($curl, CURLOPT_HTTPHEADER,
-      array("Content-type: application/json","Authorization:key=AAAA5vs6K-A:APA91bGOYQeGh0640S3S-HrDJR8HY66jNrjQUKzC_WpXfjhRZQ-WObzw8Fu68MhZ975bJaKpFeh-8X6ZU8dHe7BJhUqHk_tc1GB-A4QSw4b89JdpLyBo0g-ZmxKThhKRVaMIJdchhWUw"));
+      array("Content-type: application/json","Authorization:key=AAAA5vs6K-A:APA91bGOYQeGh0640S3S-HrDJR8HY66jNrjQUKzC_WpXfjhRZQ-WObzw8Fu68MhZ975bJaKpFeh-8X6ZU8dHe7BJhUqHk_tc1GB-A4QSw4b89JdpLyBo0g-ZmxKThhKRVaMIJdchhWUw
+"));
 curl_setopt($curl, CURLOPT_POST, true);
 curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
 

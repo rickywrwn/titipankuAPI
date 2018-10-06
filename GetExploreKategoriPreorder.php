@@ -13,7 +13,7 @@ if(mysqli_num_rows($result) > 0)
 
           $newDate = date("d F Y", strtotime($row["tglPost"]));
           $newDate1 = date("d F Y", strtotime($row["tglPost"]));
-          $newPrice = number_format($row["price"]);
+          $newPrice = number_format($row["price"],0,",",".");
           $date = new DateTime($row["cdValue"]);
           $date2 =  new DateTime();
           $diffSeconds = $date->getTimestamp() - $date2->getTimestamp();

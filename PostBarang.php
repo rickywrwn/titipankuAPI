@@ -87,7 +87,7 @@ if($action == "insert"){
                if($result3)
                {
                  $response = array('success' => 1,
-                          'message' => 'Post Barang dan negara Sukses');
+                          'message' => 'Post Barang Sukses');
                }
                else
                {

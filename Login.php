@@ -34,6 +34,7 @@ if(isset($_GET["action"]))
                'message' => 'Login dengan facebook Berhasil');
     }else{
 
+      $name = $_GET['name'];
       $today = date("Y-m-d");
       $sql1 = "INSERT INTO user(email,password,name,bio,tanggalDaftar) VALUES ('$email', 'pass', '$name', '', '$today')";
       $result1 = mysqli_query($conn,$sql1);
@@ -62,6 +63,7 @@ if(isset($_GET["action"]))
                'message' => 'Login dengan google Berhasil');
     }else{
 
+      $name = $_GET['name'];
       $today = date("Y-m-d");
       $sql1 = "INSERT INTO user(email,password,name,bio,tanggalDaftar) VALUES ('$email', 'pass', '$name', '', '$today')";
       $result1 = mysqli_query($conn,$sql1);

@@ -13,7 +13,7 @@ if(mysqli_num_rows($result) > 0)
 
           $newDate = date("d F Y", strtotime($row["tglPost"]));
           $newDate1 = date("d F Y", strtotime($row["tglPost"]));
-          $newPrice = number_format($row["price"]);
+          $newPrice = number_format($row["price"],0,",",".");
           $request=array("id"=>$row["id"],"email"=>$row["email"],"name"=>$row["name"],"description"=>$row["description"],"category"=>$row["category"],"country"=>$row["country"],"price"=>$newPrice,"ImageName"=>$row["imageName"],"url"=>$row["url"],"qty"=>$row["qty"],"berat"=>$row["berat"],"kotaKirim"=>$row["kotaKirim"],"idKota"=>$row["idKota"],"provinsi"=>$row["provinsi"],"tglPost"=>$newDate1,"status"=>$row["status"],"deadline"=>$newDate,"batasWaktu"=>$row["batasWaktu"],"cdText"=>$row["cdText"],"cdValue"=>$row["cdValue"],"brand"=>$row["brand"]);
           array_push($app,$request);
       }

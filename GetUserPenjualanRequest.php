@@ -12,7 +12,7 @@ if(mysqli_num_rows($result5) > 0)
   while($row = $result5->fetch_assoc()) {
           $newDate = date("d F Y", strtotime($row["tglOffer"]));
           $newDate1 = date("d F Y", strtotime($row["tglPulang"]));
-          $newPrice = number_format((int)$row["hargaPenawaran"]);
+          $newPrice = number_format((int)$row["hargaPenawaran"],0,",",".");
           $offer=array("id"=>$row["id"],"idRequest"=>$row["idRequest"],"idPenawar"=>$row["idPenawar"],"tglOffer"=>$newDate,"hargaPenawaran"=>$newPrice,"valueHarga"=>$row["hargaPenawaran"],"tglPulang"=>$newDate1,"idKota"=>$row["idKota"],"kota"=>$row["kota"],"hargaOngkir"=>$row["hargaOngkir"],"jenisOngkir"=>$row["jenisOngkir"],"status"=>$row["status"]);
           array_push($offers,$offer);
       }

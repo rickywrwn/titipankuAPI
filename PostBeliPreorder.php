@@ -24,7 +24,7 @@ if($action == "insert"){
     $result5 = mysqli_query($conn,$sql5);
     if($result5)
     {
-      $sql1 = "INSERT INTO offerPreorder(idPreorder,idPembeli,tglBeli,qty,kota,idkota,hargaOngkir,pengiriman,nomorResi,jenisOngkir,status) VALUES ('$idPreorder', '$email', '$today','$qty','$kota','$idKota','$hargaOngkir','$pengiriman','0','-','1')";
+      $sql1 = "INSERT INTO offerPreorder(idPreorder,idPembeli,tglBeli,qty,kota,idkota,hargaOngkir,pengiriman,nomorResi,status) VALUES ('$idPreorder', '$email', '$today','$qty','$kota','$idKota','$hargaOngkir','$pengiriman','0','1')";
       $result1 = mysqli_query($conn,$sql1);
       if($result1)
       {
