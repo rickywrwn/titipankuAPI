@@ -36,7 +36,9 @@ if(isset($_GET["action"]))
 
       $name = $_GET['name'];
       $today = date("Y-m-d");
-      $sql1 = "INSERT INTO user(email,password,name,bio,tanggalDaftar) VALUES ('$email', 'pass', '$name', '', '$today')";
+
+      $pass = md5('pass');
+      $sql1 = "INSERT INTO user(email,password,name,bio,tanggalDaftar,status) VALUES ('$email', '$pass', '$name', '', '$today','1')";
       $result1 = mysqli_query($conn,$sql1);
       if($result1)
       {
@@ -65,7 +67,9 @@ if(isset($_GET["action"]))
 
       $name = $_GET['name'];
       $today = date("Y-m-d");
-      $sql1 = "INSERT INTO user(email,password,name,bio,tanggalDaftar) VALUES ('$email', 'pass', '$name', '', '$today')";
+
+      $pass = md5('pass');
+      $sql1 = "INSERT INTO user(email,password,name,bio,tanggalDaftar,status) VALUES ('$email', '$pass', '$name', '', '$today','1')";
       $result1 = mysqli_query($conn,$sql1);
       if($result1)
       {
@@ -97,7 +101,8 @@ if(isset($_GET["action"]))
       }
     }else{
       $today = date("Y-m-d");
-      $sql1 = "INSERT INTO user(email,password,name,bio,tanggalDaftar) VALUES ('$email', '$password', '$name', '', '$today')";
+      $pass = md5($password);
+      $sql1 = "INSERT INTO user(email,password,name,bio,tanggalDaftar,status) VALUES ('$email', '$pass', '$name', '', '$today','1')";
       $result1 = mysqli_query($conn,$sql1);
       if($result1)
       {
@@ -115,12 +120,13 @@ if(isset($_GET["action"]))
     //$password = md5($_GET["password"]);
     $password = $_GET["password"];
 
+    $pass = md5($password);
     $sql = "SELECT * FROM user WHERE email = '$email'";
     $result = mysqli_query($conn,$sql);
     if(mysqli_num_rows($result) > 0)
     {
       //Berarti Username Ada
-      $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password' AND status = '1' ";
+      $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$pass' AND status = '1' ";
       $result = mysqli_query($conn,$sql);
       if(mysqli_num_rows($result) > 0)
       {
@@ -135,8 +141,6 @@ if(isset($_GET["action"]))
                'message' => 'Email Belum Terdaftar');
     }
   }
-
-
   // headers to tell that result is JSON
   header('Content-type: application/json');
   echo json_encode($response);

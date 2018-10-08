@@ -30,7 +30,7 @@ if(mysqli_num_rows($result) > 0)
       }
 }
 
-$sql2 = "SELECT * FROM postPreorder where batasWaktu = '0' ORDER BY id DESC";
+$sql2 = "SELECT * FROM postPreorder where batasWaktu = '0' AND status != '0' ORDER BY id DESC";
 $result2 = mysqli_query($conn,$sql2);
 
 $trips=array();
@@ -46,7 +46,7 @@ if(mysqli_num_rows($result2) > 0)
       }
 }
 
-$sql1 = "SELECT * FROM postPreorder where batasWaktu = '1' ORDER BY id DESC";
+$sql1 = "SELECT * FROM postPreorder where batasWaktu = '1' AND status != '0' ORDER BY id DESC";
 $result1 = mysqli_query($conn,$sql1);
 
 $flashSale=array();

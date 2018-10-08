@@ -23,7 +23,7 @@ if($action == "insert"){
       $result2 = mysqli_query($conn,$sql2);
       if($result2){
         $response = array('success' => 1,
-                 'message' => 'Post Topup Sukses');
+                 'message' => 'Post Withdraw Sukses');
       }
 
     }
