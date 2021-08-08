@@ -30,135 +30,62 @@ $result = mysqli_query($conn,$sql);
 $trips=array();
 if(mysqli_num_rows($result) > 0)
 {
-  while($row = $result->fetch_assoc()) {
-      $id = $row["id"];
-      $idRequest = $row["idRequest"];
-      $idPemilik = $row["idPemilik"];
-      $idPenawar = $row["idPenawar"];
-      $tglPost = $row["tglOffer"];
-      $hargaPenawaran = (int)$row["hargaPenawaran"];
-      $cekDate = date('Y-m-d', strtotime($tglPost. ' + 7 days'));
-      if($today >= $cekDate){
-        $sql2 = "UPDATE offerRequest SET status='0' WHERE id='$id' ";
-        $result2 = mysqli_query($conn,$sql2);
-        if($result2)
-        {
-              $sql2 = "UPDATE postRequest SET status='1' WHERE id='$idRequest' ";
-              $result2 = mysqli_query($conn,$sql2);
-              if($result2)
-              {
+while($row = $result->fetch_assoc()) {
+$id = $row["id"];
+$idRequest = $row["idRequest"];
+$idPemilik = $row["idPemilik"];
+$idPenawar = $row["idPenawar"];
+$tglPost = $row["tglOffer"];
+$hargaPenawaran = (int)$row["hargaPenawaran"];
+$cekDate = date('Y-m-d', strtotime($tglPost. ' + 7 days'));
+if($today >= $cekDate){
+$sql2 = "UPDATE offerRequest SET status='0' WHERE id='$id' ";
+$result2 = mysqli_query($conn,$sql2);
+if($result2)
+{
+$sql2 = "UPDATE postRequest SET status='1' WHERE id='$idRequest' ";
+$result2 = mysqli_query($conn,$sql2);
+if($result2)
+{
 
-                $sql = "SELECT * FROM user WHERE email = '$idPenawar' ";
-                $result = mysqli_query($conn,$sql);
-                if(mysqli_num_rows($result) > 0)
-                {
-                  while($row = $result->fetch_assoc()) {
-                    $device = $row["device"];
+$sql = "SELECT * FROM user WHERE email = '$idPenawar' ";
+$result = mysqli_query($conn,$sql);
+if(mysqli_num_rows($result) > 0)
+{
+while($row = $result->fetch_assoc()) {
+$device = $row["device"];
 
-                      $url = "https://fcm.googleapis.com/fcm/send";
-                      $array = array(
-                      "to" => $device,
-                      "notification" => array(
-                                            "title" => "Titipanku",
-                                            "body" => "Penawaranmu dibatalkan karena melewati 7 hari"
-                                          )
-                      );
-                      $content = json_encode($array);
+$url = "https://fcm.googleapis.com/fcm/send";
+$array = array(
+"to" => $device,
+"notification" => array(
+                      "title" => "Titipanku",
+                      "body" => "Penawaranmu dibatalkan karena melewati 7 hari"
+                    )
+);
+$content = json_encode($array);
 
-                      $curl = curl_init($url);
-                      curl_setopt($curl, CURLOPT_HEADER, false);
-                      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-                      curl_setopt($curl, CURLOPT_HTTPHEADER,
-                            array("Content-type: application/json","Authorization:key=AAAA5vs6K-A:APA91bGOYQeGh0640S3S-HrDJR8HY66jNrjQUKzC_WpXfjhRZQ-WObzw8Fu68MhZ975bJaKpFeh-8X6ZU8dHe7BJhUqHk_tc1GB-A4QSw4b89JdpLyBo0g-ZmxKThhKRVaMIJdchhWUw
-                      "));
-                      curl_setopt($curl, CURLOPT_POST, true);
-                      curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
+$curl = curl_init($url);
+curl_setopt($curl, CURLOPT_HEADER, false);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_HTTPHEADER,
+      array("Content-type: application/json","Authorization:key=AAAA5vs6K-A:APA91bGOYQeGh0640S3S-HrDJR8HY66jNrjQUKzC_WpXfjhRZQ-WObzw8Fu68MhZ975bJaKpFeh-8X6ZU8dHe7BJhUqHk_tc1GB-A4QSw4b89JdpLyBo0g-ZmxKThhKRVaMIJdchhWUw
+"));
+curl_setopt($curl, CURLOPT_POST, true);
+curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
 
-                      $json_response = curl_exec($curl);
+$json_response = curl_exec($curl);
 
-                      $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+curl_close($curl);
 
-                      // if ( $status != 201 ) {
-                      //   die("Error: call to URL $url failed with status $status, response $json_response, curl_error " . curl_error($curl) . ", curl_errno " . curl_errno($curl));
-                      // }
+$trip=array("email"=>$row["email"],"saldo"=>$row["saldo"]);
+array_push($trips,$trip);
+}
+}
+...
 
-
-                      curl_close($curl);
-
-                      $trip=array("email"=>$row["email"],"saldo"=>$row["saldo"]);
-                      array_push($trips,$trip);
-                  }
-                }
-
-                $sql = "SELECT * FROM user WHERE email = '$idPemilik' ";
-                $result = mysqli_query($conn,$sql);
-                if(mysqli_num_rows($result) > 0)
-                {
-                  while($row = $result->fetch_assoc()) {
-                    $saldo = (int)$row["saldo"];
-                    $saldoNow = $saldo + $hargaPenawaran;
-                    $saldoStr = (string)$saldoNow;
-                    $device = $row["device"];
-                    $sql2 = "UPDATE user SET saldo='$saldoNow' WHERE email='$idPemilik' ";
-                    $result2 = mysqli_query($conn,$sql2);
-                    if($result2)
-                    {
-                      $url = "https://fcm.googleapis.com/fcm/send";
-                      $array = array(
-                      "to" => $device,
-                      "notification" => array(
-                                            "title" => "Titipanku",
-                                            "body" => "Penawaran pada requestmu dibatalkan karena melewati 7 hari"
-                                          )
-                      );
-                      $content = json_encode($array);
-
-                      $curl = curl_init($url);
-                      curl_setopt($curl, CURLOPT_HEADER, false);
-                      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-                      curl_setopt($curl, CURLOPT_HTTPHEADER,
-                            array("Content-type: application/json","Authorization:key=AAAA5vs6K-A:APA91bGOYQeGh0640S3S-HrDJR8HY66jNrjQUKzC_WpXfjhRZQ-WObzw8Fu68MhZ975bJaKpFeh-8X6ZU8dHe7BJhUqHk_tc1GB-A4QSw4b89JdpLyBo0g-ZmxKThhKRVaMIJdchhWUw
-                      "));
-                      curl_setopt($curl, CURLOPT_POST, true);
-                      curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
-
-                      $json_response = curl_exec($curl);
-
-                      $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-                      // if ( $status != 201 ) {
-                      //   die("Error: call to URL $url failed with status $status, response $json_response, curl_error " . curl_error($curl) . ", curl_errno " . curl_errno($curl));
-                      // }
-
-
-                      curl_close($curl);
-
-                      $trip=array("email"=>$row["email"],"saldo"=>$row["saldo"]);
-                      array_push($trips,$trip);
-
-                    }else{
-                        $trip=array("status"=>mysqli_error($conn));
-                        array_push($trips,$trip);
-                    }
-                  }
-                }else{
-                    $trip=array("status"=>"user tidak ada");
-                    array_push($trips,$trip);
-                }
-              }else{
-                  $trip=array("status"=>"post request gagal");
-                  array_push($trips,$trip);
-              }
-        }else{
-            $trip=array("status"=>"offer request gagal");
-            array_push($trips,$trip);
-        }
-      }else{
-        $trip=array("status"=>"tidak ada");
-        array_push($trips,$trip);
-      }
-
-    }
+}
 }
 
 // headers to tell that result is JSON

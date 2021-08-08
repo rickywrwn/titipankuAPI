@@ -12,7 +12,7 @@ if(mysqli_num_rows($result) > 0)
   while($row = $result->fetch_assoc()) {
           $newDate = date("d F Y", strtotime($row["tanggalDaftar"]));
           $newPrice = number_format($row["saldo"]);
-          $user=array("email"=>$row["email"],"name"=>$row["name"],"bio"=>$row["bio"],"tanggalDaftar"=>$newDate,"saldo"=>$newPrice ,"valueSaldo"=>$row["saldo"],"device"=>$row["device"]);
+          $user=array("email"=>$row["email"],"name"=>$row["name"],"bio"=>$row["bio"],"tanggalDaftar"=>$newDate,"saldo"=>$newPrice ,"valueSaldo"=>$row["saldo"],"device"=>$row["device"],"berat"=>$row["berat"],"ukuran"=>$row["ukuran"]);
       }
 }
 // headers to tell that result is JSON
